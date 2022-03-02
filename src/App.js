@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 import LogIn from './pages/LogIn';
 import { useState } from 'react';
-
+import useSignUp from "../src/hook/useSignUp"
 
 
 
@@ -23,6 +23,8 @@ function App() {
       password: password
     }
 
+    signUp(email, password, name)
+
     setName("")
     setEmail("")
     setPassword("")
@@ -41,14 +43,15 @@ function App() {
             <input onChange={(e) => setName(e.target.value)} type="text" placeholder='name' value={name} />
             <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder='email' value={email} />
             <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder='password' value={password} />
-            <button>Add</button>
+            {loading && <button>Loading</button>}
+            {!loading && <button>Add</button>}
+            {error && <p>{error}</p>}
+           
           </form>
         </div>
 
 
-        <Routes>
-          <Route path='/login' element={<LogIn/>}></Route>
-        </Routes>
+        
     
     </BrowserRouter>
   );

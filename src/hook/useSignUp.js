@@ -12,7 +12,7 @@ const useSignUp = () => {
         setError(null)
       try{
           const res = await authDashboard.createUserWithEmailAndPassword(email, password);
-          
+          console.log(res.user)
           if(!res){
               throw new Error("Nu sa putut conecta")
           }
@@ -21,15 +21,15 @@ const useSignUp = () => {
           setLoading(false)
           setError(null)
       }catch(e){
-          console.log(e.messege)
-          setError(e.messege)
+          console.log(e.message)
+          setError(e.message)
           setLoading(false)
     
       }
     
     }
     
-    export {error, loading, signUp}
+    return {error, loading, signUp}
 }
  
 export default useSignUp;
