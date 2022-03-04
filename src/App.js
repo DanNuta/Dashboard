@@ -1,60 +1,36 @@
-import './App.css';
-import { BrowserRouter, Routes, Route} from "react-router-dom";
-import LogIn from './pages/LogIn';
+import { BrowserRouter, Routes, Route, useNavigate, Navigate} from "react-router-dom";
+import SignIn from './pages/SignIn';
 import { useState } from 'react';
-import useSignUp from "../src/hook/useSignUp"
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import LogIn from "./pages/LogIn";
+import useAuthContext from "./hook/useAuthContext";
 
 
 
-function App() {
+const App = () => {
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  
 
-  const {error, loading, signUp} = useSignUp()
+  const {authIsReady, user} = useAuthContext();
 
-  const send = (e) =>{
-    e.preventDefault();
-
-    const logIn = {
-      nume: name,
-      email: email,
-      password: password
-    }
-
-    signUp(email, password, name)
-
-    setName("")
-    setEmail("")
-    setPassword("")
-
-    console.log(logIn)
-
-  }
-
-  return (
-    <BrowserRouter>
-
-       
-
-        <div className="App">
-          <form onSubmit={send}>
-            <input onChange={(e) => setName(e.target.value)} type="text" placeholder='name' value={name} />
-            <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder='email' value={email} />
-            <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder='password' value={password} />
-            {loading && <button>Loading</button>}
-            {!loading && <button>Add</button>}
-            {error && <p>{error}</p>}
-           
-          </form>
-        </div>
-
-
-        
-    
-    </BrowserRouter>
-  );
+  return ( 
+    <div>
+      {authIsReady && (
+        <BrowserRouter>
+        <Navbar/>
+  
+  
+        <Routes>
+          <Route path="/" element={ user ? <Home/> : <Navigate to="/login"/>}></Route>
+          <Route path="/signin" element={ !user ?<SignIn/> : <Navigate to="/"/>}></Route>
+          <Route path="/login" element={ !user ? <LogIn/> : <Navigate to="/login"/>}></Route>
+  
+        </Routes>
+      </BrowserRouter>
+      )}
+    </div>
+   );
 }
-
+ 
 export default App;
