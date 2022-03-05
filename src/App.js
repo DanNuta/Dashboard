@@ -23,7 +23,7 @@ const App = () => {
   
         <Routes>
           <Route path="/" element={ user ? <Home/> : <Navigate to="/login"/>}></Route>
-          <Route path="/signin" element={ !user ?<SignIn/> : <Navigate to="/"/>}></Route>
+          <Route path="/signin" element={ !user ? <SignIn/> : <Navigate to="/"/>}></Route>
           <Route path="/login" element={ !user ? <LogIn/> : <Navigate to="/login"/>}></Route>
   
         </Routes>
