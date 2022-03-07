@@ -19,5 +19,6 @@ const firebaseConfig = {
   //init services
 
   const authDashboard = firebase.auth();
+  const firestoreDashboard = firebase.firestore();
 
-  export {authDashboard}
+  export {authDashboard, firestoreDashboard}
