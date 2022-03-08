@@ -1,14 +1,28 @@
 import { firestoreDashboard } from "../firebase/config";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
-const useCollection = (collection) => {
+
+const useCollection = (collection,) => {
     const [error, setError] = useState(null);
-    const [isPending, setIsPending] = useState(false)
-    const [data, setData] = useState(null)
+    const [isPending, setIsPending] = useState(false);
+    const [data, setData] = useState(null);
+
+    const {user} = useContext(AuthContext)
+
+
+    
 
 
     useEffect(() =>{
-        let ref = firestoreDashboard.collection(collection);
+        let ref = firestoreDashboard.collection(collection)
+                                    .where(["uid", "==", user.uid]);
+
+        // if(query){
+        //     ref = ref.where(...query)
+        // }
+
 
         const unsubscribe = ref.onSnapshot((snapshot) =>{
             let result = [];

@@ -34,6 +34,9 @@ const ContextAuth = (props) => {
     })
 
 
+    console.log(state)
+
+
     useEffect(() =>{
        const unsub = authDashboard.onAuthStateChanged((user) =>{
             dispatch({type: 'AUTH_IS_READY', payload: user})

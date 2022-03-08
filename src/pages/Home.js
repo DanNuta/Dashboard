@@ -3,16 +3,17 @@ import useFirestore from "../hook/useFirestore";
 import useAuthContext from "../hook/useAuthContext";
 import useCollection from "../hook/useCollection";
 
+
 const Home = () => {
 
     const [name, setName] = useState("");
     const [counter, setCounter] = useState("");
+    const {user} = useAuthContext()
 
     const {data, error} = useCollection("transaction")
 
-    console.log(data)
+    
 
-    const {user} = useAuthContext()
 
     const {addDoc, deleteDoc, response} = useFirestore("transaction");
 
@@ -23,13 +24,8 @@ const Home = () => {
             name: name,
             counter: counter
         }
-
-        
-
-        addDoc({...obj, id: user.uid})
-
-       
-     }
+        addDoc({...obj, id: user.uid})   
+    }
 
      useEffect(() =>{
         if(response.succes){
@@ -37,6 +33,9 @@ const Home = () => {
             setName("");
         }
     }, [response.succes])
+
+
+
 
     return ( 
         <div>
