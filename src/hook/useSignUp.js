@@ -14,6 +14,7 @@ const useSignUp = () => {
     const signUp = async (email, password, displayName) =>{
         setLoading(true)
         setError(null)
+        
       try{
           const res = await authDashboard.createUserWithEmailAndPassword(email, password);
           console.log(res.user)
